@@ -20,6 +20,8 @@
         </activity>
         <activity android:name=".RecyclerViewActivity" />
         <activity android:name=".base.BaseActivity" />
+
+        <service android:name=".service.PluginService" />
     </application>
 
 </manifest>
