@@ -22,6 +22,7 @@
         <activity android:name=".base.BaseActivity" />
 
         <service android:name=".service.PluginService" />
+        <service android:name=".service.PluginService02" />
     </application>
 
 </manifest>

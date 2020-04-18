@@ -1,6 +1,5 @@
 package com.wangzhen.plugin.two.service;
 
-import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -8,17 +7,20 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import com.wangzhen.plugin.base.PluginBaseService;
+
 /**
- * PluginService
+ * PluginService02
  * Created by wangzhen on 2020/4/7.
  */
-public class PluginService extends Service {
+public class PluginService02 extends PluginBaseService {
+
     private boolean running = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Log.e("TAG", "PluginService -> onCreate");
+        Log.e("TAG", "PluginService02 -> onCreate");
     }
 
     @Nullable
@@ -29,8 +31,8 @@ public class PluginService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.e("TAG", "PluginService -> onStartCommand");
-        Toast.makeText(getBaseContext(), "PluginService -> onStartCommand", Toast.LENGTH_SHORT).show();
+        Log.e("TAG", "PluginService02 -> onStartCommand");
+        Toast.makeText(getBaseContext(), "PluginService02 -> onStartCommand", Toast.LENGTH_SHORT).show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -40,7 +42,7 @@ public class PluginService extends Service {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    Log.e("TAG", "PluginService -> running " + System.currentTimeMillis());
+                    Log.e("TAG", "PluginService02 -> running " + System.currentTimeMillis());
                 }
             }
         }).start();
@@ -50,8 +52,8 @@ public class PluginService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.e("TAG", "PluginService -> onDestroy");
-        Toast.makeText(getBaseContext(), "PluginService -> onDestroy", Toast.LENGTH_SHORT).show();
+        Log.e("TAG", "PluginService02 -> onDestroy");
+        Toast.makeText(getBaseContext(), "PluginService02 -> onDestroy", Toast.LENGTH_SHORT).show();
         running = false;
     }
 }

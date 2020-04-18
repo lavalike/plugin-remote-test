@@ -47,6 +47,18 @@
             android:layout_height="wrap_content"
             android:text="stop service" />
 
+        <Button
+            android:id="@+id/btn_start_service02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start service 02" />
+
+        <Button
+            android:id="@+id/btn_stop_service02"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="stop service 02" />
+
     </LinearLayout>
 
 </ScrollView>
