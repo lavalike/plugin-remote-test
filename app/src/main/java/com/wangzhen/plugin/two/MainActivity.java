@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat;
 import com.wangzhen.plugin.two.base.BaseActivity;
 import com.wangzhen.plugin.two.service.PluginService;
 import com.wangzhen.plugin.two.service.PluginService02;
+import com.wangzhen.plugin.two.widget.TestDialog;
 import com.wangzhen.statusbar.DarkStatusBar;
 import com.wangzhen.statusbar.listener.StatusBar;
 
@@ -38,11 +39,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_stop_service).setOnClickListener(this);
         findViewById(R.id.btn_start_service02).setOnClickListener(this);
         findViewById(R.id.btn_stop_service02).setOnClickListener(this);
+        findViewById(R.id.btn_dialog).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_dialog:
+                dialog();
+                break;
             case R.id.btn_start_service02:
                 startService(new Intent(getActivity(), PluginService02.class));
                 break;
@@ -82,6 +87,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 isDark = !isDark;
                 break;
         }
+    }
+
+    private void dialog() {
+        new TestDialog(getActivity()).show();
     }
 
     private void call() {
