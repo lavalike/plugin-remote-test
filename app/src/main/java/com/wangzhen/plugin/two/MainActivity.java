@@ -69,23 +69,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_broadcast).setOnClickListener(this);
         findViewById(R.id.btn_create_view_model).setOnClickListener(this);
         findViewById(R.id.btn_send_view_model).setOnClickListener(this);
+        findViewById(R.id.btn_launch_plugin).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_launch_plugin:
+                launchPlugin();
+                break;
             case R.id.btn_create_view_model:
-                mViewModel = new ViewModelProvider((FragmentActivity) getActivity()).get(TestViewModel.class);
-                mViewModel.getLiveData().observe((FragmentActivity) getActivity(), new Observer<String>() {
-                    @Override
-                    public void onChanged(String s) {
-                        Toast.makeText(getActivity(), "ViewModelProvider onChanged -> " + s, Toast.LENGTH_SHORT).show();
-                    }
-                });
-                Toast.makeText(getActivity(), "ViewModel registered", Toast.LENGTH_SHORT).show();
+                createViewModel();
                 break;
             case R.id.btn_send_view_model:
-                viewModel();
+                sendViewModel();
                 break;
             case R.id.btn_broadcast:
                 broadcast();
@@ -134,7 +131,24 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
-    private void viewModel() {
+    private void createViewModel() {
+        mViewModel = new ViewModelProvider((FragmentActivity) getActivity()).get(TestViewModel.class);
+        mViewModel.getLiveData().observe((FragmentActivity) getActivity(), new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Toast.makeText(getActivity(), "ViewModelProvider onChanged -> " + s, Toast.LENGTH_SHORT).show();
+            }
+        });
+        Toast.makeText(getActivity(), "ViewModel registered", Toast.LENGTH_SHORT).show();
+    }
+
+    private void launchPlugin() {
+        Intent intent = new Intent("launch_plugin");
+        intent.putExtra("plugin", "plugin-one");
+        sendBroadcast(intent);
+    }
+
+    private void sendViewModel() {
         if (mViewModel != null) {
             mViewModel.setLiveData("test data");
         }
