@@ -2,7 +2,10 @@ package com.wangzhen.plugin.two;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -22,12 +25,30 @@ import com.wangzhen.statusbar.listener.StatusBar;
 
 public class MainActivity extends BaseActivity implements View.OnClickListener {
     private boolean isDark = true;
+    private static final String action = "plugin-two";
+    private BroadcastReceiver mReceiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
+        init();
+    }
+
+    private void init() {
+        mReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (action.equals(intent.getAction())) {
+                    String data = intent.getStringExtra("data");
+                    Toast.makeText(context, "收到广播 data -> " + data, Toast.LENGTH_SHORT).show();
+                }
+            }
+        };
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(action);
+        registerReceiver(mReceiver, intentFilter);
     }
 
     private void initViews() {
@@ -40,11 +61,15 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_start_service02).setOnClickListener(this);
         findViewById(R.id.btn_stop_service02).setOnClickListener(this);
         findViewById(R.id.btn_dialog).setOnClickListener(this);
+        findViewById(R.id.btn_broadcast).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_broadcast:
+                broadcast();
+                break;
             case R.id.btn_dialog:
                 dialog();
                 break;
@@ -89,6 +114,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    private void broadcast() {
+        Intent intent = new Intent(action);
+        intent.putExtra("data", "test data");
+        sendBroadcast(intent);
+    }
+
     private void dialog() {
         new TestDialog(getActivity()).show();
     }
@@ -111,4 +142,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mReceiver);
+    }
 }
