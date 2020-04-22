@@ -40,4 +40,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.1.0"
     implementation 'com.github.lavalike:plugin-manager:0.0.6.2'
     implementation 'com.wangzhen:dark-status-bar:1.0.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 }

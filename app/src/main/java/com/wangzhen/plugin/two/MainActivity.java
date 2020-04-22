@@ -15,10 +15,14 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.wangzhen.plugin.two.base.BaseActivity;
 import com.wangzhen.plugin.two.service.PluginService;
 import com.wangzhen.plugin.two.service.PluginService02;
+import com.wangzhen.plugin.two.viewmodel.TestViewModel;
 import com.wangzhen.plugin.two.widget.TestDialog;
 import com.wangzhen.statusbar.DarkStatusBar;
 import com.wangzhen.statusbar.listener.StatusBar;
@@ -27,6 +31,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private boolean isDark = true;
     private static final String action = "plugin-two";
     private BroadcastReceiver mReceiver;
+    private TestViewModel mViewModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,11 +67,26 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.btn_stop_service02).setOnClickListener(this);
         findViewById(R.id.btn_dialog).setOnClickListener(this);
         findViewById(R.id.btn_broadcast).setOnClickListener(this);
+        findViewById(R.id.btn_create_view_model).setOnClickListener(this);
+        findViewById(R.id.btn_send_view_model).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.btn_create_view_model:
+                mViewModel = new ViewModelProvider((FragmentActivity) getActivity()).get(TestViewModel.class);
+                mViewModel.getLiveData().observe((FragmentActivity) getActivity(), new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        Toast.makeText(getActivity(), "ViewModelProvider onChanged -> " + s, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                Toast.makeText(getActivity(), "ViewModel registered", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.btn_send_view_model:
+                viewModel();
+                break;
             case R.id.btn_broadcast:
                 broadcast();
                 break;
@@ -111,6 +131,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 isDark = !isDark;
                 break;
+        }
+    }
+
+    private void viewModel() {
+        if (mViewModel != null) {
+            mViewModel.setLiveData("test data");
         }
     }
 

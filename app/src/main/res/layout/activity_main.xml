@@ -71,6 +71,17 @@
             android:layout_height="wrap_content"
             android:text="broadcast" />
 
+        <Button
+            android:id="@+id/btn_create_view_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="create ViewModel + LiveData" />
+        <Button
+            android:id="@+id/btn_send_view_model"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="send ViewModel + LiveData" />
+
     </LinearLayout>
 
 </ScrollView>
