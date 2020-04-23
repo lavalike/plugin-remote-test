@@ -1,5 +1,6 @@
 package com.wangzhen.plugin.two.service;
 
+import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
@@ -7,13 +8,11 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import com.wangzhen.plugin.base.PluginBaseService;
-
 /**
  * PluginService02
  * Created by wangzhen on 2020/4/7.
  */
-public class PluginService02 extends PluginBaseService {
+public class PluginService02 extends Service {
 
     private boolean running = true;
 
