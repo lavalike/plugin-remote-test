@@ -39,6 +39,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         initViews();
         init();
+        startActivity(new Intent(getActivity(), RecyclerViewActivity.class));
+        finish();
     }
 
     private void init() {

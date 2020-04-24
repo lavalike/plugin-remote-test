@@ -92,7 +92,16 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="请输入" />
+            android:hint="请输入"
+            android:imeOptions="actionNext"
+            android:singleLine="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="请输入2"
+            android:imeOptions="actionDone"
+            android:singleLine="true" />
 
     </LinearLayout>
 
