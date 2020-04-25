@@ -13,7 +13,7 @@ public class BaseActivity extends PluginBaseActivity {
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        DarkStatusBar.get().fitDark(getActivity());
+        DarkStatusBar.get().fitDark(this);
     }
 
 }

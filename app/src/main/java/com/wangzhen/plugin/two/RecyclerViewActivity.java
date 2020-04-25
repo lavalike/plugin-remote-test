@@ -21,7 +21,7 @@ public class RecyclerViewActivity extends BaseActivity {
 
     private void initViews() {
         mRecycler = findViewById(R.id.recycler);
-        mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setAdapter(new PluginRecyclerAdapter());
     }
 }

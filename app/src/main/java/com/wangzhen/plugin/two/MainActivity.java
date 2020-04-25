@@ -1,7 +1,6 @@
 package com.wangzhen.plugin.two;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -39,8 +38,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         setContentView(R.layout.activity_main);
         initViews();
         init();
-        startActivity(new Intent(getActivity(), RecyclerViewActivity.class));
-        finish();
+        startActivity(new Intent(this, RecyclerViewActivity.class));
     }
 
     private void init() {
@@ -93,21 +91,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 dialog();
                 break;
             case R.id.btn_start_service02:
-                startService(new Intent(getActivity(), PluginService02.class));
+                startService(new Intent(this, PluginService02.class));
                 break;
             case R.id.btn_stop_service02:
-                stopService(new Intent(getActivity(), PluginService02.class));
+                stopService(new Intent(this, PluginService02.class));
                 break;
             case R.id.btn_start_service:
-                startService(new Intent(getActivity(), PluginService.class));
+                startService(new Intent(this, PluginService.class));
                 break;
             case R.id.btn_stop_service:
-                stopService(new Intent(getActivity(), PluginService.class));
+                stopService(new Intent(this, PluginService.class));
                 break;
             case R.id.btn_call:
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                        ActivityCompat.requestPermissions((Activity) getActivity(), new String[]{Manifest.permission.CALL_PHONE}, 1);
+                    if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
                     } else {
                         call();
                     }
@@ -116,17 +114,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
                 break;
             case R.id.btn_recycler:
-                startActivity(new Intent(getActivity(), RecyclerViewActivity.class));
+                startActivity(new Intent(this, RecyclerViewActivity.class));
                 break;
             case R.id.btn_toast:
-                Toast.makeText(getActivity(), "this is a toast in plugin", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "this is a toast in plugin", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.btn_dark_status:
                 StatusBar statusBar = DarkStatusBar.get();
                 if (isDark) {
-                    statusBar.fitLight(getActivity());
+                    statusBar.fitLight(this);
                 } else {
-                    statusBar.fitDark(getActivity());
+                    statusBar.fitDark(this);
                 }
                 isDark = !isDark;
                 break;
@@ -134,14 +132,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void createViewModel() {
-        mViewModel = new ViewModelProvider((FragmentActivity) getActivity()).get(TestViewModel.class);
-        mViewModel.getLiveData().observe((FragmentActivity) getActivity(), new Observer<String>() {
+        mViewModel = new ViewModelProvider(this).get(TestViewModel.class);
+        mViewModel.getLiveData().observe((FragmentActivity) this, new Observer<String>() {
             @Override
             public void onChanged(String s) {
-                Toast.makeText(getActivity(), "ViewModelProvider onChanged -> " + s, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "ViewModelProvider onChanged -> " + s, Toast.LENGTH_SHORT).show();
             }
         });
-        Toast.makeText(getActivity(), "ViewModel registered", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "ViewModel registered", Toast.LENGTH_SHORT).show();
     }
 
     private void launchPlugin() {
@@ -163,7 +161,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private void dialog() {
-        new TestDialog(getActivity()).show();
+        new TestDialog(this).show();
     }
 
     private void call() {
@@ -179,7 +177,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 call();
             } else {
-                Toast.makeText(getActivity(), "需要拨打电话权限", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "需要拨打电话权限", Toast.LENGTH_SHORT).show();
             }
         }
     }
